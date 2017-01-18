@@ -1,0 +1,1 @@
+/afs/cern.ch/cms/sdt/web/doxygen/cleanup.sh

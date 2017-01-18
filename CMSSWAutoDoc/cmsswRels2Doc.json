@@ -1,0 +1,78 @@
+{
+  "CMSSW_8_1_0_pre15": {
+    "status": "documented", 
+    "arch": "slc6_amd64_gcc530"
+  }, 
+  "CMSSW_8_1_0_pre14": {
+    "status": "documented", 
+    "arch": "slc6_amd64_gcc530"
+  }, 
+  "CMSSW_7_1_25_patch3": {
+    "status": "documented", 
+    "arch": "slc6_amd64_gcc481"
+  }, 
+  "CMSSW_7_1_25_patch2": {
+    "status": "documented", 
+    "arch": "slc6_amd64_gcc481"
+  }, 
+  "CMSSW_9_0_0_pre1": {
+    "status": "documented", 
+    "arch": "slc6_amd64_gcc530"
+  }, 
+  "CMSSW_7_1_25_patch4": {
+    "status": "documented", 
+    "arch": "slc6_amd64_gcc481"
+  }, 
+  "CMSSW_9_0_0_pre2": {
+    "status": "documented", 
+    "arch": "slc6_amd64_gcc530"
+  }, 
+  "CMSSW_8_1_0": {
+    "status": "documented", 
+    "arch": "slc6_amd64_gcc530"
+  }, 
+  "CMSSW_8_0_23_patch2": {
+    "status": "documented", 
+    "arch": "slc6_amd64_gcc530"
+  }, 
+  "CMSSW_8_2_0": {
+    "status": "documented", 
+    "arch": "slc6_amd64_gcc530"
+  }, 
+  "CMSSW_8_0_22": {
+    "status": "documented", 
+    "arch": "slc6_amd64_gcc530"
+  }, 
+  "CMSSW_8_0_23": {
+    "status": "documented", 
+    "arch": "slc6_amd64_gcc530"
+  }, 
+  "CMSSW_7_0_0_pre5": {
+    "status": "documenting...", 
+    "arch": "slc5_amd64_gcc481"
+  }, 
+  "CMSSW_8_1_0_pre16": {
+    "status": "documented", 
+    "arch": "slc6_amd64_gcc530"
+  }, 
+  "CMSSW_8_0_23_patch1": {
+    "status": "documented", 
+    "arch": "slc6_amd64_gcc530"
+  }, 
+  "CMSSW_8_0_24_patch1": {
+    "status": "documented", 
+    "arch": "slc6_amd64_gcc530"
+  }, 
+  "CMSSW_8_0_24": {
+    "status": "documented", 
+    "arch": "slc6_amd64_gcc530"
+  }, 
+  "CMSSW_8_0_25": {
+    "status": "documented", 
+    "arch": "slc6_amd64_gcc530"
+  }, 
+  "CMSSW_8_2_0_patch1": {
+    "status": "undocumented", 
+    "arch": "slc6_amd64_gcc530"
+  }
+}
