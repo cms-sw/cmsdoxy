@@ -31,13 +31,14 @@ Header('Content-type: text/xml');
 ?>
 <projects>
 <?php
+$doxy_URL  = "http://".$_SERVER['SERVER_NAME'].dirname($_SERVER['PHP_SELF']);
 if ($handle = opendir('.')){
     while (false !== ($dir = readdir($handle))){
         if ($dir != "." && $dir != ".." && is_dir($dir) && startsWith($dir, 'CMSSW_') && !isBeingDocumented($dir)){
             // attribute for auto-generated documentations. init state: null string
             $auto = "false";
             if(file_exists("$dir/auto.doc.2")) $auto = "true";
-            echo "    <project label=\"$dir\" url=\"https://cmssdt.cern.ch/SDT/doxygen/$dir/doc/html/\" auto-documented=\"$auto\" />\n";
+            echo "    <project label=\"$dir\" url=\"$doxy_URL/$dir/doc/html/\" auto-documented=\"$auto\" />\n";
         }
     }
     closedir($handle);

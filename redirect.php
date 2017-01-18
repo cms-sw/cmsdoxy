@@ -1,9 +1,7 @@
 <?php
 
-        //$doxy_URL = "http://cms-service-sdtweb.web.cern.ch/cms-service-sdtweb/doxygen/";
-        //$doxy_PATH = "/afs/cern.ch/cms/sdt/web/doxygen/";
-        $doxy_URL = "http://cmssdt.cern.ch/SDT/doxygen/";
-        $doxy_PATH = "/data/doxygen/";
+        $doxy_PATH = dirname($_SERVER['SCRIPT_FILENAME']);
+        $doxy_URL  = "http://".$_SERVER['SERVER_NAME'].dirname($_SERVER['PHP_SELF']);
 	
 	
 	$output = "";
@@ -50,8 +48,7 @@
 	
 	if ($r == "" && ($c =="" || $s =="" || $n =="" || $o ==""))
 	{
-		//header("Location: http://cmsdoc.cern.ch/cms/cpt/Software/html/General/gendoxy-doc.php");
-		header("http://cmssdt.cern.ch/SDT/cgi-bin/doxygen.php");
+		header($doxy_URL);
 	}
 	else 
 	{
@@ -85,9 +82,6 @@
 		}
 	}
 
-	//$query1 = 'cd '.$doxy_PATH.'; ls CMSSW_'.$r.'/doc/html/'.$object.$star.$object_name.$ext.$grep;
-	//$query2 = 'cd '.$doxy_PATH.'; ls CMSSW_'.$r.'/doc/html/*/*/'.$object.$star.$object_name.$ext.$grep;
-	
 	$query0 = 'cat '.$doxy_PATH.'CMSSW_'.$r.'/*.index | egrep "'.$object.$object_name.$ext.'"'.$grep; 
 
 	//print $query1;

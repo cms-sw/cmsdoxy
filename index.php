@@ -1,6 +1,6 @@
 <html>
 <head>
-<link type="text/css" rel="stylesheet" href="/SDT/doxygen/doxygen_php_files/doxygen.css">
+<link type="text/css" rel="stylesheet" href="doxygen_php_files/doxygen.css">
 <script type="text/javascript" src="common/jquery-1.10.2.min.js"></script>
 <title> CMSSW Reference Manual </title>
 <style>
@@ -47,17 +47,16 @@ $(document).ready(function() {
 </center>
 
 <?php
-
 function getEcalDirList()
 {
-
-   $output = trim(shell_exec("ls -rs /data/doxygen/ecaldoc | grep ECAL | awk -F \" \" '{print $2}'"));
+   $base_dir = dirname($_SERVER['SCRIPT_FILENAME']);
+   $output = trim(shell_exec("ls -rs ".$base_dir."/ecaldoc | grep ECAL | awk -F \" \" '{print $2}'"));
    $arr = explode("\n", $output);
    
    foreach($arr as $file){
         //echo "-".$file;
 
-	$suboutput = trim(shell_exec("ls -rs /data/doxygen/ecaldoc/".$file." | grep ECAL | awk -F \" \" '{print $2}'"));
+	$suboutput = trim(shell_exec("ls -rs ".$base_dir."/ecaldoc/".$file." | grep ECAL | awk -F \" \" '{print $2}'"));
    	$subarr = explode("\n", $suboutput);	
 
 	foreach($subarr as $subfile){
@@ -71,8 +70,8 @@ function getEcalDirList()
 
 function getDirList()
 {
-
-   $output = trim(shell_exec("ls -rs /data/doxygen | grep CMSSW | awk -F \" \" '{print $2}'"));
+   $base_dir = dirname($_SERVER['SCRIPT_FILENAME']);
+   $output = trim(shell_exec("ls -rs ".$base_dir." | grep CMSSW | awk -F \" \" '{print $2}'"));
    $arr = explode("\n", $output);
    
    foreach($arr as $file){
@@ -91,9 +90,8 @@ function getDirList()
 
 }
 
-
-
-$BASE = "http://cmssdt.cern.ch/SDT/doxygen/";
+$base_dir = dirname($_SERVER['SCRIPT_NAME']);
+$BASE = $base_dir."/";
 
 
 // ECAL RELEASES

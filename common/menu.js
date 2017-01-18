@@ -207,7 +207,6 @@ function dropdownMenu(){
 	var body = document.getElementsByTagName("body")[0];
 	insertAfter(body, iframe);
 			
-//     document.write("<iframe src =\"http://cmssdt.cern.ch/SDT/doxygen/versionList.php\" width=\"400\" height=\"50\" frameborder=\"0\" style=\"position:absolute; left:40%;\">noiframe</iframe>");
 }
 
 // Doxygen Support Tool (it should be rewritten)

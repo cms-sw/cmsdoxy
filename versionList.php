@@ -38,8 +38,7 @@ parent.location.href = newUrl;
 <font face="Arial" size="2">Current Version:</font>
 <select onchange="redir(this.value);" >
 <?php
-	$DOXYDIR = "/data/sdt/SDT/doxygen"; // insert the URL to the doxygen documentation directory
-
+	$DOXYDIR = dirname($_SERVER['SCRIPT_FILENAME']);
 	$output = trim(shell_exec("ls -rs ".$DOXYDIR." | grep CMSSW | awk '{printf(\"%s:\", $2)}'"), ":");
         $arr = explode(":", $output);
 

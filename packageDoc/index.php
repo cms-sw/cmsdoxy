@@ -14,9 +14,8 @@ $red_icon = "<img src=\"doc_red.png\" border=\"0\">";
 $gray_icon = "<img src=\"doc_gray.png\" border=\"0\">";
 
 
-$DOXYDIR = "/data/sdt/SDT/doxygen";
-$REFMANBASE = "http://cmssdt.cern.ch/SDT/doxygen/";
-
+$DOXYDIR = dirname(dirname($_SERVER['SCRIPT_FILENAME']));
+$REFMANBASE = "http://".$_SERVER['SERVER_NAME'].dirname(dirname($_SERVER['PHP_SELF']));
 
 $domain_GET = $_GET['domain'];
 $version_GET = $_GET['version'];
@@ -86,7 +85,7 @@ echo "</select>";
 echo "<select name=\"domain\" >";
 	
 		
-	$dataurl = "http://cmssdt.cern.ch/SDT/doxygen/tcproxy.php?type=packages&release=CMSSW_4_4_2";
+	$dataurl = $REFMANBASE."/tcproxy.php?type=packages&release=CMSSW_4_4_2";
 	$data = file_get_contents($dataurl);
 
 	$data = str_replace(array("{","]}", "\""), "", $data);

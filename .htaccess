@@ -1,0 +1,24 @@
+Options +Indexes 
+DirectoryIndex index.htmlgz index.html index.htm index.php
+RewriteEngine On
+RewriteCond %{REQUEST_URI} /doxygen/
+RewriteRule (.*/doc/.*)\.html$ $1\.htmlgz [L]
+RewriteRule (.*/doc/.*)\.png$ $1\.pnggz [L]
+RewriteRule (.*/doc/.*)\.css$ $1\.cssgz [L]
+RewriteRule (.*/doc/.*)\.js$ $1\.jsgz [L]
+RewriteRule (.*/doc/.*)\.gif$ $1\.gifgz [L]
+
+AddType "text/html;charset=UTF-8" .htmlgz
+AddEncoding gzip .htmlgz
+
+AddType "image/png" .pnggz
+AddEncoding gzip .pnggz
+
+AddType "image/gif" .gifgz
+AddEncoding gzip .gifgz
+
+AddType "text/css" .cssgz
+AddEncoding gzip .cssgz
+
+AddType "text/javascript" .jsgz
+AddEncoding gzip .jsgz
