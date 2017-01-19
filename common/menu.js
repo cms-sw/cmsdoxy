@@ -198,8 +198,8 @@ function addLinksToMenu(){
 } 
 
 function dropdownMenu(){
-	var iframe = document.createElement("iframe"); 
-	iframe.setAttribute('src', "https://cmssdt.cern.ch/SDT/doxygen/versionList.php");
+	var iframe = document.createElement("iframe");
+	iframe.setAttribute('src',urindow.location.pathname.replace(/\/CMSSW_.*$/,"versionList.php"));
 	iframe.setAttribute('width', "400");
 	iframe.setAttribute('height', "50");
 	iframe.setAttribute('frameborder', "0");
