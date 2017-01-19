@@ -75,7 +75,7 @@ function getDirList()
    $arr = explode("\n", $output);
    
    foreach($arr as $file){
-      if (strpos($file, "CMSSW") === 0) {
+      if (strpos($file, "CMSSW_") === 0) {
 	if (strpos($file, "_X_") === false){
           $version = explode("_", $file);
 	  $version_list[$version[1]][$version[2]][$version[3]][] = $file;
