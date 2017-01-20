@@ -199,7 +199,7 @@ function addLinksToMenu(){
 
 function dropdownMenu(){
 	var iframe = document.createElement("iframe");
-	iframe.setAttribute('src',window.location.pathname.replace(/\/CMSSW_.*$/,"/versionList.php"));
+	iframe.setAttribute('src',"/cmsdoxygen/versionList.php");
 	iframe.setAttribute('width', "400");
 	iframe.setAttribute('height', "50");
 	iframe.setAttribute('frameborder', "0");
