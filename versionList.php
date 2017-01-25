@@ -39,13 +39,13 @@ parent.location.href = newUrl;
 <select onchange="redir(this.value);" >
 <?php
 	$DOXYDIR = dirname($_SERVER['SCRIPT_FILENAME']);
-	$output = trim(shell_exec("ls -rs ".$DOXYDIR." | grep CMSSW | awk '{printf(\"%s:\", $2)}'"), ":");
+	$output = trim(shell_exec("ls -rs ".$DOXYDIR." | grep CMSSW_ | awk '{printf(\"%s:\", $2)}' | sed 's|.zip$||'"), ":");
         $arr = explode(":", $output);
 
         for ($i=0; $i<count($arr); $i++)
         {
              // for XCMSSW
-             if(strpos($arr[$i], "CMSSW") != 0) continue;
+             if(strpos($arr[$i], "CMSSW_") != 0) continue;
    	     echo "<option id=\"".$arr[$i]."\">".$arr[$i]."</option>\n";
 	}
 
