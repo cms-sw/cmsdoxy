@@ -1,4 +1,4 @@
 #!/bin/bash
-REQ_FILE=$(echo "${PATH_INFO}" | sed 's|^/*||;s|/doc//*html/*$|/doc/html/index.html|')
+REQ_FILE=$(echo "${PATH_INFO}" | sed 's|^/*||')
 case "${REQ_FILE}" in *.css ) echo -e "Content-type:text/css\n" ;; * ) echo -e "Content-type:text/html\n" ;; esac
 unzip -p "$(echo ${SCRIPT_FILENAME} | sed 's|/cgi-bin/.*||')/cmssw/$(echo ${REQ_FILE} | cut -d/ -f1).zip" "${REQ_FILE}"
