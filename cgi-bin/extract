@@ -1,7 +1,4 @@
-#!/usr/bin/env perl
-print "Content-type:text/html\n\n";
-print "<html><body><pre>\n";
-foreach my $k (keys %ENV){
-  print "$k=$ENV{$k}\n";
-}
+#!/bin/bash
+case $PATH_INFO in *.css ) echo -e "Content-type:text/css\n" ;; * ) echo -e "Content-type:text/html\n" ;; esac
+unzip -p $(echo $SCRIPT_FILENAME | sed 's|/cgi-bin/.*||')/cmssw/$(echo $PATH_INFO | cut -d/ -f2).zip $PATH_INFO
 
