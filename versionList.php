@@ -39,7 +39,7 @@ parent.location.href = newUrl;
 <select onchange="redir(this.value);" >
 <?php
 	$DOXYDIR = dirname($_SERVER['SCRIPT_FILENAME']);
-	$output = trim(shell_exec("ls -rs ".$DOXYDIR." | grep CMSSW_ | awk '{printf(\"%s:\", $2)}' | sed 's|.zip$||'"), ":");
+	$output = trim(shell_exec("ls -rs ".$DOXYDIR."/cmssw | grep CMSSW_ | awk '{printf(\"%s:\", $2)}' | sed 's|.zip$||'"), ":");
         $arr = explode(":", $output);
 
         for ($i=0; $i<count($arr); $i++)
