@@ -71,7 +71,7 @@ function getEcalDirList()
 function getDirList()
 {
    $base_dir = dirname($_SERVER['SCRIPT_FILENAME']);
-   $output = trim(shell_exec("ls -rs ".$base_dir."/cmssw | grep CMSSW_ | awk -F \" \" '{print $2}' | sed 's|.zip$||'"));
+   $output = trim(shell_exec("ls ".$DOXYDIR."/cmssw/ | grep CMSSW_ | sed 's|\.zip$||' | tr '\n' ' '"));
    $arr = explode("\n", $output);
    
    foreach($arr as $file){
