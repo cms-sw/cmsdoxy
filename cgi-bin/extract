@@ -1,4 +1,5 @@
 #!/bin/bash
-case $PATH_INFO in *.css ) echo -e "Content-type:text/css\n" ;; * ) echo -e "Content-type:text/html\n" ;; esac
-unzip -p $(echo $SCRIPT_FILENAME | sed 's|/cgi-bin/.*||')/cmssw/$(echo $PATH_INFO | cut -d/ -f2).zip $PATH_INFO
+REQ_FILE=$(echo ${PATH_INFO} | sed 's|^/*||;s|/doc//*html/*$|/doc/html/index.html|')
+case ${REQ_FILE} in *.css ) echo -e "Content-type:text/css\n" ;; * ) echo -e "Content-type:text/html\n" ;; esac
+unzip -p $(echo ${SCRIPT_FILENAME} | sed 's|/cgi-bin/.*||')/cmssw/$(echo ${REQ_FILE} | cut -d/ -f2).zip ${REQ_FILE}
 
