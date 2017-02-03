@@ -21,6 +21,7 @@ function checkError(){
 WORK_DIR=$(pwd)
 BASE=$(dirname $(readlink -f "${BASH_SOURCE[0]}"))
 REL=$RELEASE_FORMAT
+TMP=TMP
 cd $BASE
 #source init.sh
 
@@ -54,6 +55,7 @@ exec 2>&1
 
 # set the architecture
 export SCRAM_ARCH=$ARCHITECTURE
+mkdir $TMP
 cd $TMP
 echo "TMP" $TMP
 # delete old release direcroy in case of an unsuccessful doc process if exists
