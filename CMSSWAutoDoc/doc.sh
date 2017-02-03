@@ -20,6 +20,7 @@ function checkError(){
 
 WORK_DIR=$(pwd)
 BASE=$(dirname $(readlink -f "${BASH_SOURCE[0]}"))
+REL=$RELEASE_FORMAT
 cd $BASE
 #source init.sh
 
@@ -52,7 +53,7 @@ exec 2>&1
 #cp $IOFILE /eos/project/c/cmsweb/www/cmssdt/doxygen/CMSSWAutoDoc
 
 # set the architecture
-export SCRAM_ARCH=$ARCH
+export SCRAM_ARCH=$ARCHITECTURE
 cd $TMP
 echo "TMP" $TMP
 # delete old release direcroy in case of an unsuccessful doc process if exists
