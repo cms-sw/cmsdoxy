@@ -21,35 +21,35 @@ function checkError(){
 WORK_DIR=$(pwd)
 BASE=$(dirname $(readlink -f "${BASH_SOURCE[0]}"))
 cd $BASE
-source init.sh
+#source init.sh
 
-RELEASE=$(python $BASE/find.py $IOFILE "undocumented")
-checkError "find.py didn't return zero."
+#RELEASE=$(python $BASE/find.py $IOFILE "undocumented")
+#checkError "find.py didn't return zero."
 
-if [ "-" == "$RELEASE" ]; then
-    echo "## nothing to document... Cool huh?"
-    echo ""
-    exit 0
-fi
+#if [ "-" == "$RELEASE" ]; then
+#    echo "## nothing to document... Cool huh?"
+#    echo ""
+#    exit 0
+#fi
 
 # get version of the CMSSW
-REL=$(echo $RELEASE | cut -f 1 -d ' ')
+#REL=$(echo $RELEASE | cut -f 1 -d ' ')
 # get destination architexture
-ARCH=$(echo $RELEASE | cut -f 2 -d ' ')
+#ARCH=$(echo $RELEASE | cut -f 2 -d ' ')
 
 # Redirect stdout ( > ) into a named pipe ( >() ) running "tee"
 exec > >(tee -a "${LOG_PATH}/${REL}_${LOG_DATE}.log")
 # capture stderr
 exec 2>&1
 
-echo "## hostname: $(hostname)"
-echo "## user:     $(whoami)"
-echo "## Documenting $REL ($ARCH)..."
+#echo "## hostname: $(hostname)"
+#echo "## user:     $(whoami)"
+#echo "## Documenting $REL ($ARCH)..."
 
-python $BASE/semaphore.py $IOFILE $REL "documenting..."
-checkError "$IOFILE could not be updated."
+#python $BASE/semaphore.py $IOFILE $REL "documenting..."
+#checkError "$IOFILE could not be updated."
 #scp $IOFILE cmsdoxy@cmssdt01.cern.ch:/data/doxygen/CMSSWAutoDoc
-cp $IOFILE /eos/project/c/cmsweb/www/cmssdt/doxygen/CMSSWAutoDoc
+#cp $IOFILE /eos/project/c/cmsweb/www/cmssdt/doxygen/CMSSWAutoDoc
 
 # set the architecture
 export SCRAM_ARCH=$ARCH
@@ -84,9 +84,10 @@ cd $TMP/$REL/src/Documentation/
 echo "go to: $TMP/$REL/src/Documentation/"
 rm -rf ReferenceManualScripts/
 echo "delete: ReferenceManualScripts"
-cp -r /afs/cern.ch/work/c/cmsdoxy/ReferenceManualScripts .
-checkError "I coldn't copy the directory, /afs/cern.ch/work/c/cmsdoxy/ReferenceManualScripts"
-echo "cp -r /afs/cern.ch/work/c/cmsdoxy/ReferenceManualScripts `pwd`"
+#cp -r /afs/cern.ch/work/c/cmsdoxy/ReferenceManualScripts .
+cp -r cmsdoxy/cmsdoxy/ReferenceManualScripts/scripts
+checkError "I coldn't copy the directory, i cmsdoxy/cmsdoxy/ReferenceManualScripts/scripts"
+echo "cp -r cmsdoxy/cmsdoxy/ReferenceManualScripts/scripts `pwd`"
 cd $TMP/$REL/src/Documentation/ReferenceManualScripts/scripts
 tcsh generate_reference_manual > /dev/null
 checkError "I couldn't generate the refman..."
