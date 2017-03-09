@@ -24,7 +24,7 @@ ARCH=$ARCHITECTURE
 REL=$RELEASE_FORMAT
 
 # Redirect stdout ( > ) into a named pipe ( >() ) running "tee"
-exec > >(tee -a "${LOG_PATH}/${REL}_${LOG_DATE}.log")
+exec > >(tee -a "${WORK_DIR}/${REL}.log")
 # capture stderr
 exec 2>&1
 
@@ -89,6 +89,8 @@ echo "## uploading files..."
 cd $TMP
 zip -r ${REL}.zip $REL
 cp -r $REL.zip /eos/project/c/cmsweb/www/cmssdt/doxygen/cmssw
+mkdir /eos/project/c/cmsweb/www/cmssdt/doxygen/logs
+cp ${WORK_DIR}/${REL}.log /eos/project/c/cmsweb/www/cmssdt/doxygen/logs/${REL}.log
 checkError "auto-generated documentation could not be uploaded."
 
 cd $WORK_DIR
