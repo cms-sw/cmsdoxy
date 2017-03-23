@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 # get the scram
 shopt -s expand_aliases
@@ -89,7 +89,7 @@ echo "## uploading files..."
 cd $TMP
 zip -r ${REL}.zip $REL
 cp -r $REL.zip /eos/project/c/cmsweb/www/cmssdt/doxygen/cmssw
-mkdir /eos/project/c/cmsweb/www/cmssdt/doxygen/logs
+mkdir -p /eos/project/c/cmsweb/www/cmssdt/doxygen/logs
 cp ${WORK_DIR}/${REL}.log /eos/project/c/cmsweb/www/cmssdt/doxygen/logs/${REL}.log
 checkError "auto-generated documentation could not be uploaded."
 
