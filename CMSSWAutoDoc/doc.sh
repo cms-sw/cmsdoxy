@@ -52,7 +52,7 @@ cmsenv # huh?
 checkError "CMSSW environments could not be set."
 
 # clone CMSSW repo
-git clone https://github.com/cms-sw/cmssw.git src
+git clone git@github.com:cms-sw/cmssw.git src
 checkError "Repo could not be cloned."
 cd $TMP/$REL/src/
 git checkout $REL
