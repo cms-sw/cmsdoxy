@@ -88,9 +88,15 @@ checkError "$IOFILE could not be updated."
 echo "## uploading files..."
 cd $TMP
 zip -r ${REL}.zip $REL
-cp -r $REL.zip /eos/project/c/cmsweb/www/cmssdt/doxygen/cmssw
-mkdir -p /eos/project/c/cmsweb/www/cmssdt/doxygen/logs
-cp ${WORK_DIR}/${REL}.log /eos/project/c/cmsweb/www/cmssdt/doxygen/logs/${REL}.log
+EOS_DIR="/eos/project/c/cmsweb/www/cmssdt/doxygen/cmssw"
+if [ -d /eos/project/c/cmsweb/www/cmssdt ] ; then
+  SSH_OPT="-o IdentitiesOnly=yes -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o ServerAliveInterval=60"
+  scp $REL.zip $SSH_OPT cmsbuild@lxplus.cern.ch:${EOS_DIR}/$REL.zip
+  scp ${WORK_DIR}/${REL}.log $SSH_OPT cmsbuild@lxplus.cern.ch:${EOS_DIR}/${REL}.log
+else
+  cp -f $REL.zip ${EOS_DIR}/$REL.zip
+  cp -f ${WORK_DIR}/${REL}.log ${EOS_DIR}/${REL}.log
+fi
 checkError "auto-generated documentation could not be uploaded."
 
 cd $WORK_DIR
