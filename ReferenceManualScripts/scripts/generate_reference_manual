@@ -1,7 +1,5 @@
 #!/bin/tcsh
 
-cmsenv
-
 set PWDv    = `pwd`
 set SOURCE  = $CMSSW_BASE/src
 set SCRIPTS = $CMSSW_BASE/src/Documentation/ReferenceManualScripts/python
