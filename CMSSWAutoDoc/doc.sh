@@ -13,12 +13,6 @@ mkdir $TMP
 ARCH=$ARCHITECTURE
 REL=$RELEASE_FORMAT
 
-# Redirect stdout ( > ) into a named pipe ( >() ) running "tee"
-exec > >(tee -a "${WORK_DIR}/${REL}.log")
-# capture stderr
-exec 2>&1
-
-
 # set the architecture
 export SCRAM_ARCH=$ARCH
 cd $TMP
@@ -29,6 +23,7 @@ cd $REL
 
 # set the cms env
 eval `scramv1 runtime -sh`
+which doxygen
 
 # clone CMSSW repo
 wget -q https://github.com/cms-sw/cmssw/archive/refs/tags/${REL}.tar.gz
@@ -45,7 +40,8 @@ popd
 ######## HARD CODED DOCKIT SECTION ########
 
 # clean up the base
-rm -rf biglib/ bin/ cfipython/ config/ include/ lib/ logs/ objs/ python/ src/ test/ tmp/ DocKit/
-
 cd $TMP
+mv $REL ${REL}.tmp
+mkdir $REL
+mv ${REL}.tmp/doc ${REL}/doc
 zip -r ${REL}.zip $REL
