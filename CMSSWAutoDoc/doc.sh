@@ -43,5 +43,7 @@ popd
 cd $TMP
 mv $REL ${REL}.tmp
 mkdir $REL
-mv ${REL}.tmp/doc ${REL}/doc
+mv ${REL}.tmp/doc ${REL}/
+[ -e ${REL}.tmp/${REL}.index ] && mv ${REL}.tmp/${REL}.index ${REL}/
+rm -rf ${REL}.tmp
 zip -r ${REL}.zip $REL
