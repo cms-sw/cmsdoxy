@@ -1,9 +1,9 @@
 #!/bin/bash -x
-
+THISDIR=$(realpath $(dirname $0))
 PWDv=$(/bin/pwd -P)
 SOURCE=$CMSSW_BASE/src
-SCRIPTS=$CMSSW_BASE/src/Documentation/ReferenceManualScripts/python
-DATA=$CMSSW_BASE/src/Documentation/ReferenceManualScripts/data
+SCRIPTS=${THISDIR}/../python
+DATA=${THISDIR}/../data
 DOC=$CMSSW_BASE/doc
 HTML=$DOC/html
 
