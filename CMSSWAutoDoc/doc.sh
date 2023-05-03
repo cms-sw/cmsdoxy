@@ -31,13 +31,7 @@ tar -xzf ${REL}.tar.gz
 rm -rf src ${REL}.tar.gz
 mv cmssw-${REL} src
 
-######## HARD CODED DOCKIT SECTION ########
-rm -rf src/Documentation/ReferenceManualScripts/
-cp -r $WORK_DIR/ReferenceManualScripts/ src/Documentation/
-pushd src/Documentation/ReferenceManualScripts/scripts 
-  tcsh generate_reference_manual > /dev/null
-popd
-######## HARD CODED DOCKIT SECTION ########
+$WORK_DIR/ReferenceManualScripts/scripts/generate_reference_manual
 
 # clean up the base
 cd $TMP
