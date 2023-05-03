@@ -4,7 +4,7 @@
 # (~class list) html files to understand the tags/attributes that we use in
 # this script.
 
-from BeautifulSoup import *
+from bs4 import BeautifulSoup
 import sys, os, copy
 
 htmlFullPath     = None
@@ -28,11 +28,11 @@ def extractPages(configFileFlag = False):
         # parents. This is why we need to check whether row has a style
         # attribute or not.
         styleFlag = False
-        if row.has_key('style'): styleFlag = True
+        if 'style' in row: styleFlag = True
         # change the first letter if row is not hidden (child) one
         if not styleFlag: firstLetter = row.findAll('td')[0].text[0].upper()
         # if pages dict doesn't have the page yet..
-        if not pages.has_key(firstLetter):
+        if not firstLetter in pages:
             pages[firstLetter] = []
         # insert the row into the related page
         if configFileFlag:
@@ -55,7 +55,7 @@ def extractPagesForPackage():
         # parse package names --please have a look at the pages.html file
         name = name[name.find(' '):name.find('/')].strip()
         # if the package is not added yet
-        if not pages.has_key(name): pages[name] = []
+        if not name in pages: pages[name] = []
         pages[name].append(row)
     return pages
 
@@ -82,7 +82,7 @@ if __name__ == "__main__":
     # load the html page
     with open(htmlFullPath) as f:
         htmlPage = f.read()
-        htmlPage = BeautifulSoup(htmlPage)
+        htmlPage = BeautifulSoup(htmlPage, features="lxml")
 
     # please have a look at the pages.html page. You will see that class name
     # of the related tab, which we will use to put 'index tab' by using this
@@ -101,7 +101,7 @@ if __name__ == "__main__":
         destTabClassName = 'tabs2'
 
     allRows = []
-    pageNames = pages.keys(); pageNames.sort()
+    pageNames = list(pages.keys()); pageNames.sort()
     for page in pageNames:
         allRows = allRows + pages[page]
     pages['All'] = allRows
@@ -115,12 +115,13 @@ if __name__ == "__main__":
 
     # generate pages
     for page in pageNames:
-        print 'generating %s...' % (fileNameTemplate % page)
-        temp   = BeautifulSoup(str(htmlPage))
+        print ('generating %s...' % (fileNameTemplate % page))
+        temp   = BeautifulSoup(str(htmlPage), features="lxml")
         table  = temp.find('table', {'class' : tableClassName})
         oldTab = temp.find('div', {'class' : destTabClassName})
         newTab = generateTab(pageNames, page)
-        oldTab.replaceWith(BeautifulSoup(oldTab.prettify() + str(newTab)))
+        if oldTab:
+          oldTab.replaceWith(BeautifulSoup(oldTab.prettify() + str(newTab), features="lxml"))
         for row in pages[page]:
             table.append(row)
         # replace blank character with '_'. Please notice that you will not

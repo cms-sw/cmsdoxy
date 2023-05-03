@@ -12,8 +12,12 @@
 #  + pages.html   : to get package documentation links
 #  + classes.html : to get documentation page links
 
-import sys, os, urllib2, copy
-from BeautifulSoup import *
+import sys, os, copy
+try:
+  from urllib.request import urlopen
+except:
+  from urllib2 import urlopen
+from bs4 import BeautifulSoup
 try: import json
 except ImportError: import simplejson as json
 
@@ -41,7 +45,7 @@ def getFiles(filesPagePath):
     data = {}
     # read and parse files.html to get the file hierarchy
     with open(filesPagePath) as f: page = f.read()
-    page = BeautifulSoup(page)
+    page = BeautifulSoup(page, features="lxml")
     # please have a look at the files.html page to understand the approach.
     # in short, we use number of '_' character in the id attr to read the
     # file hierarchy.
@@ -83,7 +87,7 @@ def getFiles(filesPagePath):
 def getPackages(packagesPagePath):
     data = {}
     with open(packagesPagePath) as f: page = f.read()
-    page  = BeautifulSoup(page)
+    page  = BeautifulSoup(page, features="lxml")
     table = page.find('table', {'class' : 'directory'})
     for row in table.findAll('tr'):
         cell = row.find('td')
@@ -99,7 +103,7 @@ def getPackages(packagesPagePath):
 def getClasses(classesPagePath):
     data = {}
     with open(classesPagePath) as f: page = f.read()
-    page  = BeautifulSoup(page)
+    page  = BeautifulSoup(page, features="lxml")
     content = page.find('div', {'class' : 'contents'})
     for cell in content.findAll('td'):
         aTag = cell.find('a')
@@ -128,7 +132,7 @@ def bsBugFix():
     # > -> "&gt;". The method to ged rid of this issue is to replace script
     # tags with their original versions in the string level
     html = str(htmlPage)
-    for scriptTag in BeautifulSoup(contentTmplOrg).findAll('script'):
+    for scriptTag in BeautifulSoup(contentTmplOrg, features="lxml").findAll('script'):
         js = scriptTag.text
         html = html.replace(str(scriptTag), '<script>%s</script>' % js)
     return html
@@ -154,21 +158,21 @@ def fillContentTemplate(domains):
         escapedDomainName = domain.replace(' ', '')
         rows  = rows + rowTmpl.format(escapedDomainName, domain, cCell)
         rows  = rows + aTmpl.format(escapedDomainName)
-    contentTmpl.find('table').append(BeautifulSoup(rows))
+    contentTmpl.find('table').append(BeautifulSoup(rows, features="lxml"))
     # put cmssw version
     contentTmpl.find('h2', {'id' : 'version'}).append(cmsswVersion)
     content = htmlPage.find('div', {'class' : 'contents'})
     content.append(contentTmpl)
 
 def generateTree(tree):
-    if type(tree) == dict and len(tree) == 0: return BeautifulSoup('')
+    if type(tree) == dict and len(tree) == 0: return BeautifulSoup('', features="lxml")
     # our recursive function to generate domain tree views
-    root = BeautifulSoup('<ul></ul>')
+    root = BeautifulSoup('<ul></ul>', features="lxml")
     names = tree.keys(); names.sort()
     for name in names:
-        node = BeautifulSoup('<li><div></div></li>')
+        node = BeautifulSoup('<li><div></div></li>', features="lxml")
         if type(tree[name]) == dict:
-            title = BeautifulSoup('<span class="folder"></span>')
+            title = BeautifulSoup('<span class="folder"></span>', features="lxml")
             title.span.append(name)
             node.li.append(title)
             # __git__ and __packageDoc__ are special keys which address links,
@@ -176,7 +180,7 @@ def generateTree(tree):
             # that we merge all what we have (under the __main__ block)
             for i in ['__git__', '__packageDoc__']:
                 if not i in tree[name]: continue
-                link = BeautifulSoup(' <a></a>')
+                link = BeautifulSoup(' <a></a>', features="lxml")
                 link.a['target'] = '_blank'
                 link.a['href']   = tree[name][i]
                 link.a.append('[%s]' % i.replace('_', ''))
@@ -187,7 +191,7 @@ def generateTree(tree):
             else: node.li.div['class'] = 'hitarea expandable-hitarea'
             node.li.append(generateTree(tree[name]))
         elif type(tree[name]) == str or type(tree[name]) == unicode:
-            link = BeautifulSoup('<a><span class="file"></span></a>')
+            link = BeautifulSoup('<a><span class="file"></span></a>', features="lxml")
             link.a['target'] = '_blank'
             link.a['href']   = tree[name]
             link.a.span.append(name)
@@ -198,7 +202,7 @@ def generateTree(tree):
     return root
 
 def generateTreeViewPage(tree, name):
-    page = BeautifulSoup(treeViewTmpl)
+    page = BeautifulSoup(treeViewTmpl, features="lxml")
     treeTag = page.find('ul', {'id' : 'browser'})
     treeTag.append(generateTree(tree))
     twikiLink = page.find('a', {'id' : 'twiki'})
@@ -223,26 +227,26 @@ if __name__ == "__main__":
         contentTmplOrg = f.read()
     with open('%s/TreeViewTemplate.html' % sys.argv[2]) as f:
         treeViewTmpl = f.read()
-    contentTmpl  = BeautifulSoup(contentTmplOrg)
+    contentTmpl  = BeautifulSoup(contentTmplOrg, features="lxml")
     dataSrc      = dataSrc + sys.argv[3]
     htmlFilePath = os.path.split(htmlFullPath)[0]
     htmlFileName = os.path.split(htmlFullPath)[1]
     cmsswVersion = sys.argv[3]
 
     # load html page
-    with open(htmlFullPath) as f: htmlPage = BeautifulSoup(f.read())
+    with open(htmlFullPath) as f: htmlPage = BeautifulSoup(f.read(), features="lxml")
 
     # get json data from cmsdoxy/CMSSWTagCollector
     successFlag = False; loopLimit = 3
     while(not successFlag and loopLimit > 0):
         loopLimit = loopLimit - 1
         try:
-            print 'reading data from cmsdoxy/CMSSWTagCollector...'
-            data = urllib2.urlopen(dataSrc).read()
+            print ('reading data from cmsdoxy/CMSSWTagCollector...')
+            data = urlopen(dataSrc).read()
             data = json.loads(data)
             successFlag = True
         except:
-            print 'I couldn\'t get the data. Trying again...'
+            print ('I couldn\'t get the data. Trying again...')
     # if you cannot get data from the CMSSWTagCollector,
     # inform user and exit
     if not successFlag:
@@ -252,17 +256,17 @@ if __name__ == "__main__":
         sys.stderr.write("# PLEASE SEND AN EMAIL TO cmsdoxy[at]cern.ch\n")
         sys.exit(1)
 
-    print 'parsing source file hierarchy...'
+    print ('parsing source file hierarchy...')
     files    = getFiles("%s/files.html" % htmlFilePath)
 
-    print 'parsing packages...'
+    print ('parsing packages...')
     packages = getPackages('%s/pages.html' % htmlFilePath)
 
-    print 'parsing classes...'
+    print ('parsing classes...')
     classes  = getClasses("%s/classes.html" % htmlFilePath)
 
     tree = copy.copy(data['CMSSW_CATEGORIES'])
-    print "generating tree views..."
+    print ("generating tree views...")
     # merge files and the tree collected from cmsdoxy/CMSSWTagCollector
     for domain in tree: # Core
         for l1 in tree[domain]: # Configuration
@@ -288,13 +292,13 @@ if __name__ == "__main__":
     # the html main page now.
     prepareTemplate()
 
-    print "generating mainpage..."
+    print ("generating mainpage...")
     fillContentTemplate(data['PERSON_MAP'])
 
     with open("%s/index.html" % htmlFilePath, 'w') as f:
         f.write(bsBugFix())
 
-    print 'generating domain pages...'
+    print ('generating domain pages...')
     # generate tree view pages
     for domain in tree:
         page  = generateTreeViewPage(tree[domain], domain)
