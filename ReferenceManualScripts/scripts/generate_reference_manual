@@ -1,15 +1,15 @@
-#!/bin/tcsh
+#!/bin/bash -x
+THISDIR=$(realpath $(dirname $0))
+PWDv=$(/bin/pwd -P)
+SOURCE=$CMSSW_BASE/src
+SCRIPTS=${THISDIR}/../python
+DATA=${THISDIR}/../data
+DOC=$CMSSW_BASE/doc
+HTML=$DOC/html
 
-set PWDv    = `pwd`
-set SOURCE  = $CMSSW_BASE/src
-set SCRIPTS = $CMSSW_BASE/src/Documentation/ReferenceManualScripts/python
-set DATA    = $CMSSW_BASE/src/Documentation/ReferenceManualScripts/data
-set DOC     = $CMSSW_BASE/doc
-set HTML    = $DOC/html
-
-if (-e $DOC) then
+if [ -e $DOC ] ; then
     rm -Rf $DOC
-endif
+fi
 
 mkdir $DOC
 
