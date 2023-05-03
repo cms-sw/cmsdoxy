@@ -4,7 +4,7 @@
 shopt -s expand_aliases
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 
-WORK_DIR=$(/bin/pwd)
+WORK_DIR=$(/bin/pwd -P)
 BASE=$(dirname $(readlink -f "${BASH_SOURCE[0]}"))
 cd $BASE
 TMP="${WORK_DIR}/TMP"
