@@ -147,7 +147,7 @@ $nb = $dirList[1];
 echo "<hr><div class=\"roundbox\"><b><center> Night builds </center> </b></div>";
 echo "<div class=\"tabs\" style=\"margin-left:150px; width:auto\"><ul class=\"tablist\" style=\"margin:0px;\">";
 
-while (list ($key, $value) = each ($nb) ) { 
+foreach ($nb as $key => $value){
 	echo "<li><a target=\"_blank\" href=".$BASE.$value."/doc/html>".$value."</a></li> ";
      }
 
@@ -159,19 +159,15 @@ echo "<hr>";
 // CMSSW RELEASES
 
 krsort($level1);
-while (list ($key1, $level2) = each ($level1) ){ 
-
+foreach ($level1 as $key1 => $level2){
   krsort($level2);
-  while (list ($key2, $level3) = each ($level2) ) { 
-
+  foreach ($level2 as $key2 => $level3){
     krsort($level3);
     echo "<hr><div class=\"roundbox\"><b>CMSSW_".$key1."_".$key2."_* </b></div>";
-    while (list ($key3, $values) = each ($level3) ) { 
-
+    foreach ($level3 as $key3 => $values) {
       echo "<div class=\"tabs\" style=\"margin-left:150px; width:auto\"><ul class=\"tablist\" style=\"margin:0px;\">";
-
       sort($values);
-      while (list ($key, $value) = each ($values) ) { 
+      foreach ($values as $key => $value) {
 	echo "<li><a target=\"_blank\" href=".$BASE.$value."/doc/html>".$value."</a></li> ";
       }
       echo("</ul></div>");
