@@ -1,4 +1,12 @@
 #!/bin/bash
-REQ_FILE=$(echo "${PATH_INFO}" | sed 's|^/*||')
+REQ_FILE=$(echo "${PATH_INFO}" | sed 's|^/*||;s|;||g;s|$||g;s|"||g' | sed "s|'||g")
 case "${REQ_FILE}" in *.css ) echo -e "Content-type:text/css\n" ;; * ) echo -e "Content-type:text/html\n" ;; esac
-unzip -p "$(echo ${SCRIPT_FILENAME} | sed 's|/cgi-bin/.*||')/cmssw/$(echo ${REQ_FILE} | cut -d/ -f1).zip" "${REQ_FILE}"
+DOXY_FILE="$(echo ${SCRIPT_FILENAME} | sed 's|/cgi-bin/.*||')/cmssw/$(echo ${REQ_FILE} | cut -d/ -f1)"
+if [ -e "${DOXY_FILE}.sqfs" ] ; then
+  TMPDIR=/tmp/cmsdoxy_$$
+  unsquashfs -quiet -no-progress -no-xattrs -d $TMPDIR "${DOXY_FILE}.sqfs" "${REQ_FILE}" || true
+  [ -f "${TMPDIR}/${REQ_FILE}" ] && cat "${TMPDIR}/${REQ_FILE}"
+  rm -rf ${TMPDIR}
+else
+  unzip -p "${DOXY_FILE}.zip" "${REQ_FILE}"
+fi
