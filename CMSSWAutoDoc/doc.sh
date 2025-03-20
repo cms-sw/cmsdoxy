@@ -42,4 +42,3 @@ mkdir $REL
 mv ${REL}.tmp/doc ${REL}/
 [ -e ${REL}.tmp/${REL}.index ] && mv ${REL}.tmp/${REL}.index ${REL}/
 rm -rf ${REL}.tmp
-mksquashfs ${REL} ${REL}.sqfs -keep-as-directory -comp zstd -no-sparse -no-xattrs -no-duplicates -no-progress
