@@ -1,6 +1,8 @@
-Options +Indexes 
+Options +Indexes
 DirectoryIndex index.php index.html index.htm index.php
 RewriteEngine On
 RewriteBase  /cmsdoxygen/
-RewriteRule  ^(CMSSW_[^/]+/+doc/+html)/*$  /cmsdoxygen/$1/index.html       [R,L]
-RewriteRule  ^(CMSSW_.*)                   /cmsdoxygen/cgi-bin/extract/$1  [L]
+RewriteRule  ^(CMSSW_[^/]+)/*$             /cmsdoxygen/$1/doc/html/index.html    [R,L]
+RewriteRule  ^(CMSSW_[^/]+/+doc)/*$        /cmsdoxygen/$1/html/index.html        [R,L]
+RewriteRule  ^(CMSSW_[^/]+/+doc/+html)/*$  /cmsdoxygen/$1/index.html             [R,L]
+RewriteRule  ^(CMSSW_.*)                   /cmsdoxygen/cgi-bin/extract/$1        [L]
