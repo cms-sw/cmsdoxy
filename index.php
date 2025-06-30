@@ -1,7 +1,7 @@
 <html>
 <head>
 <link type="text/css" rel="stylesheet" href="doxygen_php_files/doxygen.css">
-<script type="text/javascript" src="common/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="common/jquery-3.7.1.min.js"></script>
 <title> CMSSW Reference Manual </title>
 <style>
 .roundbox{
