@@ -71,7 +71,7 @@ function getEcalDirList()
 function getDirList()
 {
    $base_dir = dirname($_SERVER['SCRIPT_FILENAME']);
-   $output = trim(shell_exec("ls ".$base_dir."/cmssw/ | grep CMSSW_ | sed 's|\.zip$||;s|\.sqfs$||'"));
+   $output = trim(shell_exec("ls ".$base_dir."/cmssw/ | grep CMSSW_ | sed 's|\.sqfs$||'"));
    $arr = explode("\n", $output);
    
    foreach($arr as $file){
@@ -91,7 +91,7 @@ function getDirList()
 }
 
 $base_dir = dirname($_SERVER['SCRIPT_NAME']);
-$BASE = $base_dir."/";
+$BASE = $base_dir."/cmssw/";
 
 
 // ECAL RELEASES
